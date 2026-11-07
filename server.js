@@ -2,7 +2,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const express = require('express');
 const cors = require('cors');
-const axios = require('axios');
+const https = require('https');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -13,7 +13,7 @@ app.use(express.static('.'));
 
 const ATENAS_API_KEY = process.env.ATENAS_PAY_API_KEY || 'atenaspay_live_6d19d42aead11728e90b8d993973fcbe62770ac44e5258a35b66a1638412001b';
 
-app.post('/api/gerar-pix', async (req, res) => {
+app.post('/api/gerar-pix', (req, res) => {
     try {
         const { valor } = req.body;
 
@@ -21,7 +21,7 @@ app.post('/api/gerar-pix', async (req, res) => {
             return res.status(400).json({ error: 'Informe um valor válido.' });
         }
 
-        const response = await axios.post('https://api.atenaspay.com/v1/pix/cashin', {
+        const postData = JSON.stringify({
             amount: parseFloat(valor),
             description: "Doacao Capela Divina Esperanca",
             customer: {
@@ -29,19 +29,58 @@ app.post('/api/gerar-pix', async (req, res) => {
                 email: "doacao@capela.org",
                 cpf: "00000000000"
             }
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'api-key': ATENAS_API_KEY
-            }
         });
 
-        console.log('=== RESPOSTA DA ATENAS PAY ===', response.data);
-        res.json(response.data);
+        const options = {
+            hostname: 'api.atenaspay.com',
+            port: 443,
+            path: '/v1/pix/cashin',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'api-key': ATENAS_API_KEY,
+                'Content-Length': Buffer.byteLength(postData)
+            },
+            rejectUnauthorized: false
+        };
+
+        const request = https.request(options, (response) => {
+            let data = '';
+
+            response.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            response.on('end', () => {
+                try {
+                    const parsedData = JSON.parse(data);
+                    console.log('=== RESPOSTA DA ATENAS PAY ===', parsedData);
+
+                    if (response.statusCode >= 400) {
+                        return res.status(response.statusCode).json({
+                            error: parsedData.message || parsedData.error || 'Erro na Atenas Pay',
+                            detalhes: parsedData
+                        });
+                    }
+
+                    res.json(parsedData);
+                } catch (e) {
+                    res.status(500).json({ error: 'Erro ao interpretar resposta da API', raw: data });
+                }
+            });
+        });
+
+        request.on('error', (error) => {
+            console.error('Erro na requisição HTTPS:', error);
+            res.status(500).json({ error: 'Falha na comunicação com a Atenas Pay', detalhe: error.message });
+        });
+
+        request.write(postData);
+        request.end();
+
     } catch (error) {
-        const erroDetalhe = error.response ? error.response.data : error.message;
-        console.error('Erro na requisição Atenas Pay:', erroDetalhe);
-        res.status(500).json({ error: 'Falha interna no servidor', detalhe: erroDetalhe });
+        console.error('Erro interno no servidor:', error);
+        res.status(500).json({ error: 'Falha interna no servidor', detalhe: error.message });
     }
 });
 
