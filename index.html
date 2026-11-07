@@ -61,10 +61,6 @@
             background-size: 24px 24px;
             opacity: 0.15;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(12px);
-        }
         .gold-gradient-text {
             background: linear-gradient(135deg, #f5df93 0%, #D4AF37 50%, #b89226 100%);
             -webkit-background-clip: text;
@@ -85,9 +81,6 @@
         ::-webkit-scrollbar-thumb {
             background: #800020;
             border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #630018;
         }
     </style>
 </head>
@@ -118,7 +111,6 @@
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-stone-700">
                 <a href="#historia" class="hover:text-vinho-700 transition">A Capela</a>
                 <a href="#metas" class="hover:text-vinho-700 transition">Metas da Reforma</a>
-                <a href="#progresso" class="hover:text-vinho-700 transition">Arrecadação</a>
                 <a href="#transparencia" class="hover:text-vinho-700 transition">Transparência</a>
                 <a href="#doar" class="bg-vinho-700 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-vinho-800 transition shadow-md shadow-vinho-700/20 flex items-center space-x-2 border border-dourado-500/40">
                     <i class="fas fa-heart text-dourado-400"></i>
@@ -156,7 +148,7 @@
             </p>
 
             <p class="text-stone-300 text-sm sm:text-base max-w-2xl font-light leading-relaxed mb-10">
-                Ajude-nos a cuidar da casa de Deus. Sua doação será destinada diretamente às melhorias e reformas prioritárias: renovação do jardim, restauração da porta de entrada, pintura das paredes, novas cadeiras, ventiladores e revitalização do altar sagrado.
+                Ajude-nos a cuidar da casa de Deus. Sua doação será destinada diretamente às melhorias e reformas prioritárias: renovação do jardim externo, revitalização do altar, pintura da fachada sacra e restauração da porta principal.
             </p>
 
             <div class="flex flex-col sm:flex-row items-center gap-4 justify-center sm:justify-start">
@@ -173,46 +165,19 @@
             <div class="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl">
                 <div class="bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm text-center">
                     <i class="fas fa-leaf text-dourado-400 text-xl mb-1"></i>
-                    <span class="block text-xs font-semibold text-stone-200">Jardim Florido</span>
+                    <span class="block text-xs font-semibold text-stone-200">Jardim Externo</span>
+                </div>
+                <div class="bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm text-center">
+                    <i class="fas fa-church text-dourado-400 text-xl mb-1"></i>
+                    <span class="block text-xs font-semibold text-stone-200">Altar & Nave</span>
+                </div>
+                <div class="bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm text-center">
+                    <i class="fas fa-paint-brush text-dourado-400 text-xl mb-1"></i>
+                    <span class="block text-xs font-semibold text-stone-200">Fachada Sacra</span>
                 </div>
                 <div class="bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm text-center">
                     <i class="fas fa-door-open text-dourado-400 text-xl mb-1"></i>
-                    <span class="block text-xs font-semibold text-stone-200">Porta Restaurada</span>
-                </div>
-                <div class="bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm text-center">
-                    <i class="fas fa-chair text-dourado-400 text-xl mb-1"></i>
-                    <span class="block text-xs font-semibold text-stone-200">Cadeiras Novas</span>
-                </div>
-                <div class="bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm text-center">
-                    <i class="fas fa-pray text-dourado-400 text-xl mb-1"></i>
-                    <span class="block text-xs font-semibold text-stone-200">Altar Sagrado</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Progresso -->
-    <section id="progresso" class="py-12 bg-vinho-900 text-white border-b border-dourado-500/30">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-vinho-950/70 border border-dourado-500/40 p-6 sm:p-8 rounded-3xl backdrop-blur-md shadow-2xl">
-                <div class="flex flex-col md:flex-row justify-between items-center mb-6 text-center md:text-left gap-4">
-                    <div>
-                        <span class="text-dourado-400 font-semibold text-xs tracking-widest uppercase block mb-1">Status da Arrecadação</span>
-                        <h3 class="font-cinzel text-2xl sm:text-3xl font-bold">R$ <span id="valor-arrecadado">22.750</span> <span class="text-stone-400 text-sm font-sans font-normal">de R$ 35.000 (Meta Total)</span></h3>
-                    </div>
-                    <div class="text-center md:text-right">
-                        <span class="font-cinzel text-3xl font-bold text-dourado-400" id="porcentagem-meta">65%</span>
-                        <span class="block text-xs text-stone-300">Concluído da 1ª Etapa</span>
-                    </div>
-                </div>
-
-                <div class="w-full bg-stone-800 rounded-full h-4 p-0.5 overflow-hidden border border-dourado-500/30 shadow-inner">
-                    <div id="barra-progresso" class="gold-gradient-bg h-full rounded-full transition-all duration-1000 ease-out" style="width: 65%;"></div>
-                </div>
-
-                <div class="mt-4 flex flex-wrap justify-between items-center text-xs text-stone-300 gap-2">
-                    <span class="flex items-center"><i class="fas fa-users text-dourado-400 mr-2"></i> <strong id="total-doadores" class="text-white mr-1">184</strong> irmãos já contribuíram</span>
-                    <span class="flex items-center"><i class="fas fa-shield-alt text-dourado-400 mr-2"></i> Transparência e auditoria pelo Conselho Paroquial</span>
+                    <span class="block text-xs font-semibold text-stone-200">Porta Principal</span>
                 </div>
             </div>
         </div>
@@ -234,13 +199,13 @@
                     A <strong class="text-vinho-800 font-bold">Capela da Divina Esperança</strong> nasce com a missão sagrada de ser um refúgio de fé, acolhimento e paz para todos. Sob a proteção e o amor infinito do Sagrado Coração de Jesus, queremos manter as portas abertas e o nosso espaço digno para receber cada irmão que busca consolo, oração e renovação.
                 </p>
                 <p>
-                    Para continuar sendo esse porto seguro, nossa casa sagrada precisa de cuidados urgentes. Cada doação recebida será um gesto concreto de amor transformado na revitalização do nosso templo: no abraço verde do <strong class="text-vinho-800">jardim</strong> que acolhe quem chega, na restauração da <strong class="text-vinho-800">porta de entrada</strong> e das <strong class="text-vinho-800">paredes</strong>, no conforto das <strong class="text-vinho-800">cadeiras</strong> e da <strong class="text-vinho-800">ventilação</strong> para as nossas celebrações, e no zelo supremo com o nosso <strong class="text-vinho-800">altar</strong>, onde a fé se renova a cada missa.
+                    Para continuar sendo esse porto seguro, nossa casa sagrada precisa de cuidados urgentes. Cada doação recebida será um gesto concreto de amor transformado na revitalização do nosso templo: desde o <strong class="text-vinho-800">jardim externo</strong> que acolhe quem chega, passando pela <strong class="text-vinho-800">nave e o altar sagrado</strong>, a revitalização da <strong class="text-vinho-800">fachada</strong> e o restauro detalhado da grandiosa <strong class="text-vinho-800">porta principal</strong>.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Metas da Reforma -->
+    <!-- Metas da Reforma (Com as fotos reais enviadas) -->
     <section id="metas" class="py-20 bg-creme-200/60 border-y border-amber-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
@@ -250,10 +215,12 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- PONTO 1: Jardim Externo -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between card-glow transition duration-300">
                     <div>
                         <div class="relative h-52 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80" alt="Jardim" class="w-full h-full object-cover">
+                            <img src="igreja_jardim_externo.jpg" alt="Jardim Externo" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent"></div>
                             <span class="absolute top-3 right-3 bg-vinho-700 text-dourado-300 text-xs font-bold px-3 py-1 rounded-full">Ponto 1</span>
                             <div class="absolute bottom-3 left-3 text-white">
@@ -261,58 +228,62 @@
                             </div>
                         </div>
                         <div class="p-5 text-xs text-stone-600 leading-relaxed">
-                            <p>Revitalização do espaço verde de entrada com flores e caminhos acessíveis.</p>
+                            <p>Revitalização completa do espaço verde de entrada com canteiros floridos, limpeza dos caminhos e manutenção do banco de repouso para os fiéis.</p>
                         </div>
                     </div>
                 </div>
 
+                <!-- PONTO 2: Altar & Nave da Capela -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between card-glow transition duration-300">
                     <div>
                         <div class="relative h-52 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1548625149-fc4a29cf7092?auto=format&fit=crop&w=800&q=80" alt="Altar" class="w-full h-full object-cover">
+                            <img src="igreja_interior_bancos.jpg" alt="Altar e Bancos" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent"></div>
                             <span class="absolute top-3 right-3 bg-vinho-700 text-dourado-300 text-xs font-bold px-3 py-1 rounded-full">Ponto 2</span>
                             <div class="absolute bottom-3 left-3 text-white">
-                                <h3 class="font-serif font-bold text-lg">Altar & Cadeiras</h3>
+                                <h3 class="font-serif font-bold text-lg">Altar & Nave da Capela</h3>
                             </div>
                         </div>
                         <div class="p-5 text-xs text-stone-600 leading-relaxed">
-                            <p>Zelo pelo altar sagrado e novas cadeiras ergonômicas para os fiéis.</p>
+                            <p>Zelo profundo pelo altar sagrado, recuperação e envernizamento dos bancos de madeira da nave e melhoria do conforto interno para as celebrações.</p>
                         </div>
                     </div>
                 </div>
 
+                <!-- PONTO 3: Fachada Sacra -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between card-glow transition duration-300">
                     <div>
                         <div class="relative h-52 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80" alt="Pintura" class="w-full h-full object-cover">
+                            <img src="Capela Antiga Sob o Sol.png" alt="Fachada Sacra" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent"></div>
                             <span class="absolute top-3 right-3 bg-vinho-700 text-dourado-300 text-xs font-bold px-3 py-1 rounded-full">Ponto 3</span>
                             <div class="absolute bottom-3 left-3 text-white">
-                                <h3 class="font-serif font-bold text-lg">Pintura & Ventiladores</h3>
+                                <h3 class="font-serif font-bold text-lg">Fachada Sacra</h3>
                             </div>
                         </div>
                         <div class="p-5 text-xs text-stone-600 leading-relaxed">
-                            <p>Pintura com tinta lavável e instalação de ventiladores silenciosos.</p>
+                            <p>Restauração e pintura externa da fachada da capela, valorizando a arquitetura histórica sob a luz do sol, corrigindo os desgastes do tempo na alvenaria.</p>
                         </div>
                     </div>
                 </div>
 
+                <!-- PONTO 4: Porta Principal -->
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between card-glow transition duration-300">
                     <div>
                         <div class="relative h-52 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&w=800&q=80" alt="Porta" class="w-full h-full object-cover">
+                            <img src="igreja_fachada_lateral.jpg" alt="Porta Principal" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent"></div>
                             <span class="absolute top-3 right-3 bg-vinho-700 text-dourado-300 text-xs font-bold px-3 py-1 rounded-full">Ponto 4</span>
                             <div class="absolute bottom-3 left-3 text-white">
-                                <h3 class="font-serif font-bold text-lg">Porta de Entrada</h3>
+                                <h3 class="font-serif font-bold text-lg">Porta Principal</h3>
                             </div>
                         </div>
                         <div class="p-5 text-xs text-stone-600 leading-relaxed">
-                            <p>Restauração artesanal em madeira nobre da grande porta principal.</p>
+                            <p>Restauração artesanal em madeira nobre da grande porta de entrada principal da capela, aplicando verniz protetor especial para preservar sua beleza clássica e durabilidade.</p>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -429,7 +400,6 @@
             }
         }
 
-        // Função que comunica com o backend no Render e gera o PIX real da Atenas Pay
         async function gerarPIX() {
             const inputCustom = document.getElementById('valor-personalizado');
             if (inputCustom.value && parseFloat(inputCustom.value) > 0) {
@@ -461,7 +431,6 @@
                 document.getElementById('pix-valor-confirmado').innerText = `R$ ${valorDoacaoAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
                 document.getElementById('pix-copia-cola').value = copiaCola;
 
-                // Gera QR Code via API pública segura
                 const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(copiaCola)}`;
                 document.getElementById('qrcode-img').src = qrCodeUrl;
 
