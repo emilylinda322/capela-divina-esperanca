@@ -1,68 +1,69 @@
 const express = require('express');
 const cors = require('cors');
+const https = require('https');
 
 const app = express();
-app.use(express.json());
+const PORT = process.env.PORT || 10000;
+
 app.use(cors());
-app.use(express.static('./')); // Serve o index.html e assets
+app.use(express.json());
+app.use(express.static('.'));
 
 const ATENAS_API_KEY = process.env.ATENAS_PAY_API_KEY || 'atenaspay_live_6d19d42aead11728e90b8d993973fcbe62770ac44e5258a35b66a1638412001b';
 
+// Agente HTTPS que ignora a verificação estrita de certificado SSL
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false
+});
+
 app.post('/api/gerar-pix', async (req, res) => {
-  try {
-    const { valor } = req.body;
+    try {
+        const { valor } = req.body;
 
-    if (!valor || isNaN(valor) || valor <= 0) {
-      return res.status(400).json({ error: 'Informe um valor válido.' });
-    }
+        if (!valor || isNaN(valor) || valor <= 0) {
+            return res.status(400).json({ error: 'Informe um valor válido.' });
+        }
 
-    const valorEmCentavos = Math.round(parseFloat(valor) * 100);
-
-    const response = await fetch('https://api.atenaspay.com/v1/pix/cashin', {
+        const response = await fetch('https://api.atenaspay.com/v1/pix/cashin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'api-key': ATENAS_API_KEY
             },
-      body: JSON.stringify({
-        amount: valorEmCentavos,
-        value: valorEmCentavos,
-        description: "Doacao Capela Divina Esperanca"
-      })
-    });
+            agent: httpsAgent,
+            body: JSON.stringify({
+                amount: parseFloat(valor),
+                description: "Doacao Capela Divina Esperanca",
+                customer: {
+                    name: "Doador Capela",
+                    email: "doacao@capela.org",
+                    cpf: "00000000000"
+                }
+            })
+        });
 
-    const data = await response.json();
-    console.log("=== RESPOSTA DA ATENAS PAY ===");
-    console.log(data);
+        const data = await response.json();
+        console.log('=== RESPOSTA DA ATENAS PAY ===', data);
 
-    const pixCopiaECola = data.qr_code || data.pix_copy_paste || data.emv || (data.data && data.data.qr_code);
-    const qrCodeBase64 = data.qr_code_base64 || data.qrcode_base64 || (data.data && data.data.qr_code_base64);
+        if (!response.ok) {
+            return res.status(response.status).json({ 
+                error: data.message || data.error || 'Erro na Atenas Pay',
+                detalhes: data 
+            });
+        }
 
-    if (!response.ok || !pixCopiaECola) {
-      return res.status(400).json({ error: 'Erro ao gerar Pix na Atenas Pay.', resposta: data });
+        res.json(data);
+    } catch (error) {
+        console.error('Erro no servidor:', error);
+        res.status(500).json({ error: 'Falha interna no servidor', detalhe: error.message });
     }
-
-    return res.json({
-      success: true,
-      pix_copy_paste: pixCopiaECola,
-      qrcode_base64: qrCodeBase64
-    });
-
-  } catch (error) {
-    console.error('Erro no servidor:', error);
-    return res.status(500).json({ error: 'Falha interna no servidor.' });
-  }
 });
 
 app.post('/api/webhook/atenas', (req, res) => {
-  const evento = req.body;
-  if (evento.type === 'payment.confirmed' || evento.event === 'payment.confirmed') {
-    console.log('✅ Doação confirmada via Webhook:', evento.data);
-  }
-  res.status(200).send({ received: true });
+    console.log('=== WEBHOOK RECEBIDO ===', req.body);
+    res.status(200).send('OK');
 });
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
