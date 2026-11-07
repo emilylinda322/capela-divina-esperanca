@@ -23,12 +23,7 @@ app.post('/api/gerar-pix', (req, res) => {
 
         const postData = JSON.stringify({
             amount: parseFloat(valor),
-            description: "Doacao Capela Divina Esperanca",
-            customer: {
-                name: "Doador Capela",
-                email: "doacao@capela.org",
-                cpf: "00000000000"
-            }
+            description: "Doacao Capela Divina Esperanca"
         });
 
         const options = {
@@ -52,9 +47,10 @@ app.post('/api/gerar-pix', (req, res) => {
             });
 
             response.on('end', () => {
+                console.log('=== RESPOSTA DA ATENAS PAY ===', data);
+
                 try {
                     const parsedData = JSON.parse(data);
-                    console.log('=== RESPOSTA DA ATENAS PAY ===', parsedData);
 
                     if (response.statusCode >= 400) {
                         return res.status(response.statusCode).json({
@@ -63,7 +59,20 @@ app.post('/api/gerar-pix', (req, res) => {
                         });
                     }
 
-                    res.json(parsedData);
+                    // Mapeia qualquer variação de nome de chave da Atenas Pay para 'pix_copy_paste'
+                    const chavePix = parsedData.pix_copy_paste || 
+                                     parsedData.pixCopiaECola || 
+                                     parsedData.qrcode || 
+                                     parsedData.qr_code ||
+                                     parsedData.data?.pix_copy_paste ||
+                                     parsedData.data?.qrcode;
+
+                    res.json({
+                        success: true,
+                        pix_copy_paste: chavePix,
+                        raw: parsedData
+                    });
+
                 } catch (e) {
                     res.status(500).json({ error: 'Erro ao interpretar resposta da API', raw: data });
                 }
