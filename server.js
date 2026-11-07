@@ -35,6 +35,8 @@ app.post('/api/gerar-pix', (req, res) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
                 'api-key': ATENAS_API_KEY,
                 'Content-Length': Buffer.byteLength(postData)
             },
@@ -70,12 +72,12 @@ app.post('/api/gerar-pix', (req, res) => {
 
                     return res.status(200).json({
                         success: false,
-                        error: parsedData.message || parsedData.error || "Atenas Pay não gerou a chave PIX",
+                        error: parsedData.message || parsedData.error || "Erro retornado pela API da Atenas Pay",
                         pix_copy_paste: null
                     });
 
                 } catch (e) {
-                    res.status(200).json({ success: false, error: "Resposta inválida: " + data });
+                    res.status(200).json({ success: false, error: "A API da Atenas Pay devolveu página HTML/Cloudflare em vez de JSON." });
                 }
             });
         });
