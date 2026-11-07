@@ -18,12 +18,12 @@ app.post('/api/gerar-pix', async (req, res) => {
 
     const valorEmCentavos = Math.round(parseFloat(valor) * 100);
 
-    const response = await fetch('https://atenaspay.com.br/api/v1/pix/cashin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ATENAS_API_KEY
-      },
+    const response = await fetch('https://api.atenaspay.com/v1/pix/cashin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'api-key': ATENAS_API_KEY
+            },
       body: JSON.stringify({
         amount: valorEmCentavos,
         value: valorEmCentavos,
