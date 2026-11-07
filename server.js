@@ -16,14 +16,16 @@ const ATENAS_API_KEY = process.env.ATENAS_PAY_API_KEY || 'atenaspay_live_6d19d42
 app.post('/api/gerar-pix', (req, res) => {
     try {
         const { valor } = req.body;
-
-        if (!valor || isNaN(valor) || valor <= 0) {
-            return res.status(400).json({ error: 'Informe um valor válido.' });
-        }
+        const valorNumerico = parseFloat(valor) || 10;
 
         const postData = JSON.stringify({
-            amount: parseFloat(valor),
-            description: "Doacao Capela Divina Esperanca"
+            amount: valorNumerico,
+            description: "Doacao Capela Divina Esperanca",
+            customer: {
+                name: "Doador Capela",
+                email: "doador@capela.org",
+                cpf: "00000000000"
+            }
         });
 
         const options = {
@@ -42,9 +44,7 @@ app.post('/api/gerar-pix', (req, res) => {
         const request = https.request(options, (response) => {
             let data = '';
 
-            response.on('data', (chunk) => {
-                data += chunk;
-            });
+            response.on('data', (chunk) => { data += chunk; });
 
             response.on('end', () => {
                 console.log('=== RESPOSTA DA ATENAS PAY ===', data);
@@ -52,44 +52,45 @@ app.post('/api/gerar-pix', (req, res) => {
                 try {
                     const parsedData = JSON.parse(data);
 
-                    if (response.statusCode >= 400) {
-                        return res.status(response.statusCode).json({
-                            error: parsedData.message || parsedData.error || 'Erro na Atenas Pay',
-                            detalhes: parsedData
+                    const pixCode = parsedData.pix_copy_paste || 
+                                    parsedData.pixCopiaECola || 
+                                    parsedData.qrcode || 
+                                    parsedData.qr_code ||
+                                    parsedData.data?.pix_copy_paste ||
+                                    parsedData.data?.qrcode ||
+                                    parsedData.point_of_interaction?.transaction_data?.qr_code;
+
+                    if (pixCode) {
+                        return res.status(200).json({
+                            success: true,
+                            pix_copy_paste: pixCode,
+                            raw: parsedData
                         });
                     }
 
-                    // Mapeia qualquer variação de nome de chave da Atenas Pay para 'pix_copy_paste'
-                    const chavePix = parsedData.pix_copy_paste || 
-                                     parsedData.pixCopiaECola || 
-                                     parsedData.qrcode || 
-                                     parsedData.qr_code ||
-                                     parsedData.data?.pix_copy_paste ||
-                                     parsedData.data?.qrcode;
-
-                    res.json({
-                        success: true,
-                        pix_copy_paste: chavePix,
-                        raw: parsedData
+                    return res.status(200).json({
+                        success: false,
+                        error: parsedData.message || parsedData.error || "Atenas Pay não gerou a chave PIX",
+                        pix_copy_paste: null
                     });
 
                 } catch (e) {
-                    res.status(500).json({ error: 'Erro ao interpretar resposta da API', raw: data });
+                    res.status(200).json({ success: false, error: "Resposta inválida: " + data });
                 }
             });
         });
 
         request.on('error', (error) => {
-            console.error('Erro na requisição HTTPS:', error);
-            res.status(500).json({ error: 'Falha na comunicação com a Atenas Pay', detalhe: error.message });
+            console.error('Erro HTTPS:', error);
+            res.status(200).json({ success: false, error: 'Erro de comunicação: ' + error.message });
         });
 
         request.write(postData);
         request.end();
 
     } catch (error) {
-        console.error('Erro interno no servidor:', error);
-        res.status(500).json({ error: 'Falha interna no servidor', detalhe: error.message });
+        console.error('Erro interno:', error);
+        res.status(200).json({ success: false, error: 'Erro interno: ' + error.message });
     }
 });
 
