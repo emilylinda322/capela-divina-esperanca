@@ -47,11 +47,26 @@ app.post("/api/gerar-pix", async (req, res) => {
 
     return res.json({
       success: true,
+      id: data.transaction.id,
       pix_copy_paste: pixCode,
       qrcode_base64: data.transaction.qr_code_base64 || null,
     });
   } catch {
     return res.status(500).json({ success: false, error: "Falha ao falar com a Atenas Pay." });
+  }
+});
+
+app.get("/api/pix-status/:id", async (req, res) => {
+  try {
+    const response = await fetch("https://nexuspag.com/api/pix/" + encodeURIComponent(req.params.id), {
+      headers: { "x-api-key": ATENAS_API_KEY },
+    });
+    const data = await response.json().catch(() => ({}));
+    const status = String((data.transaction && data.transaction.status) || data.status || "").toLowerCase();
+    const paid = ["paid", "confirmed", "approved", "completed", "pago", "received", "settled", "done", "success", "credited"].includes(status);
+    return res.json({ success: true, status, paid });
+  } catch {
+    return res.json({ success: false, paid: false });
   }
 });
 
