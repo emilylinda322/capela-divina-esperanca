@@ -6,6 +6,8 @@ const PORT = process.env.PORT || 10000;
 const ATENAS_API_KEY = process.env.ATENAS_PAY_API_KEY;
 
 app.use(express.json());
+app.use(express.static(__dirname));
+
 app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -34,23 +36,23 @@ app.post("/api/gerar-pix", async (req, res) => {
     });
 
     const data = await response.json().catch(() => ({}));
-    const tx = data.transaction || {};
-    const pixCode = tx.pix_copia_cola;
+    const pixCode = data.transaction && data.transaction.pix_copia_cola;
 
     if (!response.ok || !pixCode) {
-      const detalhe = data.message || data.error || "Atenas Pay não retornou código PIX";
-      return res.status(502).json({ success: false, error: detalhe });
+      return res.status(502).json({
+        success: false,
+        error: data.message || data.error || "Atenas Pay não retornou código PIX",
+      });
     }
 
     return res.json({
       success: true,
       pix_copy_paste: pixCode,
-      qrcode_base64: tx.qr_code_base64 || null,
+      qrcode_base64: data.transaction.qr_code_base64 || null,
     });
   } catch {
     return res.status(500).json({ success: false, error: "Falha ao falar com a Atenas Pay." });
   }
 });
 
-app.post("/api/webhook/atenas", (_req, res) => res.status(200).send("OK"));
 app.listen(PORT);
