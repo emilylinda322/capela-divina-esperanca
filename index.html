@@ -6,248 +6,123 @@
     <title>Capela da Divina Esperança - Campanha de Reforma</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        vinho: {
-                            50: '#fcf2f4',
-                            100: '#f8e4e8',
-                            600: '#a31d2e',
-                            700: '#800020',
-                            800: '#630018',
-                            900: '#470010',
-                            950: '#2b0008',
-                        },
-                        dourado: {
-                            300: '#f5df93',
-                            400: '#ebd073',
-                            500: '#D4AF37',
-                            600: '#b89226',
-                            700: '#94721a',
-                        },
-                        creme: {
-                            50: '#FFFFFF',
-                            100: '#FDFBF7',
-                            200: '#F7F2E8',
-                            300: '#EFE7D6',
-                        }
+                        vinho: { 700: '#800020', 800: '#630018', 950: '#2b0008' },
+                        dourado: { 300: '#f5df93', 400: '#ebd073', 500: '#D4AF37' },
+                        creme: { 100: '#FDFBF7', 200: '#F7F2E8' }
                     },
-                    fontFamily: {
-                        serif: ['Playfair Display', 'serif'],
-                        cinzel: ['Cinzel', 'serif'],
-                        sans: ['Inter', 'sans-serif'],
-                    }
+                    fontFamily: { serif: ['Playfair Display', 'serif'], cinzel: ['Cinzel', 'serif'], sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
-    <style>
-        body {
-            background-color: #FDFBF7;
-            color: #2C2C2C;
-            font-family: 'Inter', sans-serif;
-        }
-        .bg-pattern {
-            background-image: radial-gradient(#D4AF37 0.75px, transparent 0.75px);
-            background-size: 24px 24px;
-            opacity: 0.15;
-        }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #f5df93 0%, #D4AF37 50%, #b89226 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gold-gradient-bg {
-            background: linear-gradient(135deg, #f5df93 0%, #D4AF37 50%, #b89226 100%);
-        }
-        .card-glow:hover {
-            box-shadow: 0 15px 30px -10px rgba(128, 0, 32, 0.15);
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FDFBF7;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #800020;
-            border-radius: 4px;
-        }
-    </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col justify-between selection:bg-dourado-500 selection:text-vinho-900">
+<body class="antialiased min-h-screen flex flex-col justify-between bg-creme-100 text-stone-800 font-sans">
 
-    <!-- Toast System -->
-    <div id="toast-container" class="fixed top-5 right-5 z-50 transform translate-y-[-150%] opacity-0 transition-all duration-300 ease-in-out max-w-md bg-stone-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 border-l-4 border-dourado-500">
-        <div id="toast-icon" class="text-dourado-500 text-xl"><i class="fas fa-check-circle"></i></div>
+    <!-- Toast de Notificação -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 transform translate-y-[-150%] opacity-0 transition-all duration-300 max-w-md bg-stone-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 border-l-4 border-dourado-500">
         <div>
             <p id="toast-title" class="font-bold text-sm">Sucesso!</p>
             <p id="toast-message" class="text-xs text-stone-300">Mensagem do sistema.</p>
         </div>
     </div>
 
-    <!-- Navegação Superior Sacra -->
+    <!-- Navegação -->
     <header class="sticky top-0 z-40 bg-creme-100/90 backdrop-blur-md border-b border-amber-200/60 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-11 h-11 rounded-full bg-vinho-700 text-dourado-500 flex items-center justify-center text-xl font-cinzel shadow-md border-2 border-dourado-500/50">
+                <div class="w-11 h-11 rounded-full bg-vinho-700 text-dourado-500 flex items-center justify-center text-xl font-cinzel border-2 border-dourado-500/50">
                     <i class="fas fa-cross"></i>
                 </div>
                 <div>
-                    <h1 class="font-cinzel font-bold text-stone-900 text-base sm:text-lg leading-tight tracking-wide">Capela Divina Esperança</h1>
-                    <p class="text-xs text-vinho-700 font-medium tracking-wider">Paróquia Sagrado Coração de Jesus</p>
+                    <h1 class="font-cinzel font-bold text-stone-900 text-base sm:text-lg">Capela Divina Esperança</h1>
+                    <p class="text-xs text-vinho-700 font-medium">Paróquia Sagrado Coração de Jesus</p>
                 </div>
             </div>
-
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-stone-700">
-                <a href="#historia" class="hover:text-vinho-700 transition">A Capela</a>
-                <a href="#metas" class="hover:text-vinho-700 transition">Metas da Reforma</a>
-                <a href="#doar" class="bg-vinho-700 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-vinho-800 transition shadow-md shadow-vinho-700/20 flex items-center space-x-2 border border-dourado-500/40">
-                    <i class="fas fa-heart text-dourado-400"></i>
-                    <span>Fazer Doação PIX</span>
-                </a>
-            </nav>
-
-            <a href="#doar" class="md:hidden bg-vinho-700 text-white px-4 py-2 rounded-full text-xs font-semibold flex items-center space-x-1.5 shadow-md border border-dourado-500/40">
+            <a href="#doar" class="bg-vinho-700 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-vinho-800 transition text-sm flex items-center space-x-2 border border-dourado-500/40">
                 <i class="fas fa-heart text-dourado-400"></i>
-                <span>Doar PIX</span>
+                <span>Fazer Doação PIX</span>
             </a>
         </div>
     </header>
 
-    <!-- Banner Principal / Hero -->
-    <section class="relative bg-vinho-950 text-white overflow-hidden">
-        <div class="absolute inset-0 z-0 opacity-30">
-            <img src="https://images.unsplash.com/photo-1548625149-fc4a29cf7092?auto=format&fit=crop&w=1920&q=80" alt="Altar Capela" class="w-full h-full object-cover">
-        </div>
-        <div class="absolute inset-0 bg-gradient-to-r from-vinho-950 via-vinho-900/90 to-vinho-950/80 z-10"></div>
-        <div class="absolute inset-0 bg-pattern z-10 pointer-events-none"></div>
-
-        <div class="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center sm:text-left">
-            <div class="inline-flex items-center space-x-2 bg-dourado-500/15 border border-dourado-500/40 text-dourado-300 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-6 backdrop-blur-sm">
-                <i class="fas fa-church text-dourado-400"></i>
-                <span>Campanha de Restauração & Conforto</span>
-            </div>
-            
-            <h1 class="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-4 text-white">
-                Capela da <span class="gold-gradient-text italic font-serif">Divina Esperança</span>
-            </h1>
-            
-            <p class="font-serif text-lg sm:text-2xl text-dourado-300 max-w-3xl font-normal italic mb-6 border-l-4 border-dourado-500 pl-4 sm:pl-6 my-4 mx-auto sm:mx-0">
-                "A sua generosidade é a resposta da oração de alguém."
-            </p>
-
-            <p class="text-stone-300 text-sm sm:text-base max-w-2xl font-light leading-relaxed mb-10">
-                Ajude-nos a cuidar da casa de Deus. Sua doação será destinada diretamente às melhorias e reformas prioritárias: renovação do jardim, recuperação do altar, revitalização da fachada sacra e restauro da porta principal.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center gap-4 justify-center sm:justify-start">
-                <a href="#doar" class="w-full sm:w-auto gold-gradient-bg hover:opacity-95 text-vinho-950 font-bold px-8 py-4 rounded-full shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-3 text-base">
-                    <i class="fas fa-hand-holding-heart text-lg"></i>
-                    <span>DOE AGORA VIA PIX</span>
-                </a>
-                <a href="#metas" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white font-medium px-6 py-4 rounded-full border border-white/25 backdrop-blur-sm transition flex items-center justify-center space-x-2 text-base">
-                    <i class="fas fa-hammer"></i>
-                    <span>Conheça as Obras</span>
-                </a>
-            </div>
+    <!-- Banner Principal -->
+    <section class="relative bg-vinho-950 text-white py-20 text-center sm:text-left px-4">
+        <div class="relative z-20 max-w-6xl mx-auto">
+            <span class="inline-block bg-dourado-500/15 border border-dourado-500/40 text-dourado-300 px-4 py-1.5 rounded-full text-xs font-semibold uppercase mb-6">Campanha de Restauração & Conforto</span>
+            <h2 class="font-cinzel text-3xl sm:text-5xl font-bold mb-4">Capela da <span class="text-dourado-400 italic font-serif">Divina Esperança</span></h2>
+            <p class="font-serif text-lg sm:text-2xl text-dourado-300 italic mb-6">"A sua generosidade é a resposta da oração de alguém."</p>
         </div>
     </section>
 
-    <!-- História -->
-    <section id="historia" class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-        <div class="text-center mb-12">
-            <span class="text-vinho-700 font-semibold text-xs tracking-widest uppercase block mb-2">Refúgio de Fé e Oração</span>
-            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900">Um Apelo ao Coração de Todos</h2>
-            <div class="w-16 h-1 bg-dourado-500 mx-auto mt-4 rounded-full"></div>
-        </div>
-
-        <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-amber-200/60 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-40 h-40 bg-dourado-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div class="space-y-6 text-stone-700 leading-relaxed text-base sm:text-lg">
-                <p>
-                    A <strong class="text-vinho-800 font-bold">Capela da Divina Esperança</strong> nasce com a missão sagrada de ser um refúgio de fé, acolhimento e paz para todos. Sob a proteção e o amor infinito do Sagrado Coração de Jesus, queremos manter as portas abertas e o nosso espaço digno para receber cada irmão que busca consolo, oração e renovação.
-                </p>
-                <p>
-                    Para continuar sendo esse porto seguro, nossa casa sagrada precisa de cuidados urgentes. Cada doação recebida será um gesto concreto de amor transformado na revitalização do nosso templo.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Metas da Reforma (Com o Ponto 3 e Ponto 4 trocados e ajustados) -->
+    <!-- Metas da Reforma -->
     <section id="metas" class="py-20 bg-creme-200/60 border-y border-amber-200/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
-                <span class="text-vinho-700 font-semibold text-xs tracking-widest uppercase block mb-2">Metas da Nossa Reforma</span>
                 <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900">Onde a sua Doação Seria Aplicada</h2>
                 <div class="w-16 h-1 bg-dourado-500 mx-auto mt-4 rounded-full"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <!-- Ponto 1: Jardim Externo -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between card-glow transition duration-300">
+                <!-- PONTO 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between">
                     <div>
                         <div class="relative h-52 overflow-hidden bg-stone-200">
-                            <img src="igreja_jardim_externo.png" alt="Jardim Externo" class="w-full h-full object-cover">
+                            <img src="ponto1.png" alt="Jardim Externo" class="w-full h-full object-cover">
                             <span class="absolute top-3 right-3 bg-vinho-700 text-dourado-300 text-xs font-bold px-3 py-1 rounded-full">Ponto 1</span>
                         </div>
                         <div class="p-5 text-xs text-stone-600 leading-relaxed">
-                            <h3 class="font-serif font-bold text-lg text-stone-900 mb-1">Jardim & Acolhimento</h3>
-                            <p>Revitalização do espaço verde de entrada com flores, caminhos e manutenção do banco de repouso.</p>
+                            <h3 class="font-serif font-bold text-lg text-stone-900 mb-2">Jardim & Acolhimento</h3>
+                            <p>Revitalização completa do espaço verde de entrada com canteiros floridos e limpeza dos caminhos.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Ponto 2: Altar & Nave -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between card-glow transition duration-300">
+                <!-- PONTO 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between">
                     <div>
                         <div class="relative h-52 overflow-hidden bg-stone-200">
-                            <img src="igreja_interior_bancos.png" alt="Altar e Bancos" class="w-full h-full object-cover">
+                            <img src="ponto2.png" alt="Altar e Bancos" class="w-full h-full object-cover">
                             <span class="absolute top-3 right-3 bg-vinho-700 text-dourado-300 text-xs font-bold px-3 py-1 rounded-full">Ponto 2</span>
                         </div>
                         <div class="p-5 text-xs text-stone-600 leading-relaxed">
-                            <h3 class="font-serif font-bold text-lg text-stone-900 mb-1">Altar & Nave da Capela</h3>
-                            <p>Zelo pelo altar sagrado, recuperação e envernizamento dos bancos de madeira da nave[cite: 14].</p>
+                            <h3 class="font-serif font-bold text-lg text-stone-900 mb-2">Altar & Nave da Capela</h3>
+                            <p>Zelo profundo pelo altar sagrado, recuperação e envernizamento dos bancos de madeira da nave.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Ponto 3: Fachada Sacra (Com a foto da fachada trocada para aqui) -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between card-glow transition duration-300">
+                <!-- PONTO 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between">
                     <div>
                         <div class="relative h-52 overflow-hidden bg-stone-200">
-                            <img src="Capela Antiga Sob o Sol.png" alt="Fachada Sacra" class="w-full h-full object-cover">
+                            <img src="ponto3.png" alt="Fachada Sacra" class="w-full h-full object-cover">
                             <span class="absolute top-3 right-3 bg-vinho-700 text-dourado-300 text-xs font-bold px-3 py-1 rounded-full">Ponto 3</span>
                         </div>
                         <div class="p-5 text-xs text-stone-600 leading-relaxed">
-                            <h3 class="font-serif font-bold text-lg text-stone-900 mb-1">Fachada Sacra</h3>
-                            <p>Restauração e pintura externa da fachada histórica sob o sol, valorizando a arquitetura e corrigindo desgastes do tempo[cite: 14, 15].</p>
+                            <h3 class="font-serif font-bold text-lg text-stone-900 mb-2">Fachada Sacra</h3>
+                            <p>Restauração e pintura externa da fachada histórica sob o sol, valorizando a arquitetura e corrigindo desgastes.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Ponto 4: Porta Principal (Com a foto lateral/porta trocada para aqui) -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between card-glow transition duration-300">
+                <!-- PONTO 4 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-200/60 flex flex-col justify-between">
                     <div>
                         <div class="relative h-52 overflow-hidden bg-stone-200">
-                            <img src="igreja_fachada_lateral.png" alt="Porta Principal" class="w-full h-full object-cover">
+                            <img src="ponto4.png" alt="Porta Principal" class="w-full h-full object-cover">
                             <span class="absolute top-3 right-3 bg-vinho-700 text-dourado-300 text-xs font-bold px-3 py-1 rounded-full">Ponto 4</span>
                         </div>
                         <div class="p-5 text-xs text-stone-600 leading-relaxed">
-                            <h3 class="font-serif font-bold text-lg text-stone-900 mb-1">Porta Principal</h3>
-                            <p>Restauração artesanal em madeira nobre da grandiosa porta de entrada principal da capela[cite: 14].</p>
+                            <h3 class="font-serif font-bold text-lg text-stone-900 mb-2">Porta Principal</h3>
+                            <p>Restauração artesanal em madeira nobre da grande porta de entrada principal da capela.</p>
                         </div>
                     </div>
                 </div>
@@ -256,184 +131,51 @@
         </div>
     </section>
 
-    <!-- Seção de Doação PIX Integrada com a Atenas Pay -->
-    <section id="doar" class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div class="text-center mb-10">
-            <span class="text-vinho-700 font-semibold text-xs tracking-widest uppercase block mb-2">Contribuição Instantânea e Segura</span>
-            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900">Faça sua Doação via PIX</h2>
-            <p class="text-stone-600 text-sm mt-2">Escolha um valor sugerido ou digite o valor que desejar.</p>
-            <div class="w-16 h-1 bg-dourado-500 mx-auto mt-4 rounded-full"></div>
-        </div>
-
-        <div class="bg-white rounded-3xl shadow-2xl border-2 border-amber-300/70 p-6 sm:p-10 relative overflow-hidden">
+    <!-- Seção de Doação PIX -->
+    <section id="doar" class="py-20 px-4 max-w-4xl mx-auto">
+        <div class="bg-white rounded-3xl shadow-2xl border-2 border-amber-300/70 p-6 sm:p-10 text-center">
+            <h2 class="font-serif text-3xl font-bold text-stone-900 mb-4">Faça sua Doação via PIX</h2>
             <div class="space-y-6">
-                <div>
-                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-3 text-center">
-                        Selecione o Valor da Doação
-                    </label>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        <button type="button" data-valor="15" onclick="selecionarValorFixo(15, this)" class="btn-valor-opcao border-2 border-stone-200 hover:border-vinho-700 rounded-2xl py-3.5 px-4 text-center transition font-bold text-stone-800">R$ 15</button>
-                        <button type="button" data-valor="30" onclick="selecionarValorFixo(30, this)" class="btn-valor-opcao border-2 border-stone-200 hover:border-vinho-700 rounded-2xl py-3.5 px-4 text-center transition font-bold text-stone-800">R$ 30</button>
-                        <button type="button" data-valor="50" onclick="selecionarValorFixo(50, this)" class="btn-valor-opcao border-2 border-vinho-700 bg-vinho-50 text-vinho-800 rounded-2xl py-3.5 px-4 text-center transition font-bold shadow-sm">R$ 50</button>
-                        <button type="button" data-valor="100" onclick="selecionarValorFixo(100, this)" class="btn-valor-opcao border-2 border-stone-200 hover:border-vinho-700 rounded-2xl py-3.5 px-4 text-center transition font-bold text-stone-800">R$ 100</button>
-                    </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <button type="button" onclick="valorDoacaoAtual=15" class="border-2 border-stone-200 rounded-2xl py-3 font-bold text-stone-800 hover:border-vinho-700">R$ 15</button>
+                    <button type="button" onclick="valorDoacaoAtual=30" class="border-2 border-stone-200 rounded-2xl py-3 font-bold text-stone-800 hover:border-vinho-700">R$ 30</button>
+                    <button type="button" onclick="valorDoacaoAtual=50" class="border-2 border-vinho-700 bg-vinho-50 rounded-2xl py-3 font-bold text-vinho-800">R$ 50</button>
+                    <button type="button" onclick="valorDoacaoAtual=100" class="border-2 border-stone-200 rounded-2xl py-3 font-bold text-stone-800 hover:border-vinho-700">R$ 100</button>
                 </div>
-
-                <div class="max-w-md mx-auto">
-                    <label for="valor-personalizado" class="block text-xs font-medium text-stone-600 mb-1.5 text-center">
-                        Ou digite outro valor:
-                    </label>
-                    <div class="relative rounded-2xl shadow-sm">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400 font-bold text-lg">R$</div>
-                        <input type="number" id="valor-personalizado" placeholder="Ex: 75.00" min="1" step="any" oninput="aoDigitarValorPersonalizado()" class="block w-full pl-12 pr-4 py-3.5 border-2 border-stone-300 rounded-2xl focus:ring-2 focus:ring-vinho-700 font-bold text-xl text-center sm:text-left">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-stone-700 mb-1">Seu Nome (Opcional):</label>
-                        <input type="text" id="nome-doador" placeholder="Ex: Maria Aparecida" class="w-full px-4 py-3 border border-stone-300 rounded-xl text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-stone-700 mb-1">Intenção de Oração:</label>
-                        <input type="text" id="intencao-oracao" placeholder="Ex: Pela saúde da família" class="w-full px-4 py-3 border border-stone-300 rounded-xl text-sm">
-                    </div>
-                </div>
-
-                <div class="text-center pt-2">
-                    <button type="button" onclick="gerarPIX()" id="btn-gerar" class="w-full sm:w-auto bg-vinho-700 hover:bg-vinho-800 text-white font-bold text-lg px-10 py-4 rounded-2xl shadow-xl transition flex items-center justify-center space-x-3 mx-auto border border-dourado-500/40">
-                        <i class="fas fa-qrcode text-dourado-400 text-xl"></i>
-                        <span id="btn-texto">GERAR CÓDIGO PIX</span>
-                    </button>
-                </div>
+                <button type="button" onclick="gerarPIX()" id="btn-gerar" class="bg-vinho-700 hover:bg-vinho-800 text-white font-bold text-lg px-10 py-4 rounded-2xl shadow-xl transition">
+                    <span id="btn-texto">GERAR CÓDIGO PIX</span>
+                </button>
             </div>
 
-            <!-- Exibição do QR Code Real da Atenas Pay -->
-            <div id="resultado-pix-container" class="hidden mt-10 pt-8 border-t-2 border-dashed border-stone-200">
-                <div class="bg-creme-100 rounded-3xl p-6 sm:p-8 border border-amber-300/80 text-center max-w-md mx-auto shadow-inner">
-                    <div class="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3.5 py-1 rounded-full mb-3">
-                        <i class="fas fa-check-circle mr-1"></i> PIX Gerado com Sucesso!
-                    </div>
-                    
-                    <h3 class="font-serif font-bold text-2xl text-stone-900 mb-4">
-                        Valor: <span id="pix-valor-confirmado" class="text-vinho-800 font-extrabold">R$ 50,00</span>
-                    </h3>
-
-                    <div class="bg-white p-4 rounded-2xl shadow-md border border-stone-200 inline-block mb-5">
-                        <img id="qrcode-img" src="" alt="QR Code PIX" class="w-56 h-56 mx-auto rounded-lg">
-                    </div>
-
-                    <div class="space-y-2 text-left">
-                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider text-center">Código PIX Copia e Cola</label>
-                        <div class="relative">
-                            <input type="text" id="pix-copia-cola" readonly class="w-full bg-white border border-stone-300 rounded-xl py-3 px-3.5 pr-24 text-xs font-mono text-stone-700 select-all">
-                            <button type="button" onclick="copiarCodigoPIX()" class="absolute right-1.5 top-1.5 bottom-1.5 bg-vinho-700 text-white font-semibold text-xs px-3.5 rounded-lg">Copiar</button>
-                        </div>
-                    </div>
+            <div id="resultado-pix-container" class="hidden mt-10 pt-8 border-t border-dashed border-stone-200">
+                <div class="bg-creme-100 rounded-3xl p-6 text-center max-w-md mx-auto">
+                    <img id="qrcode-img" src="" alt="QR Code PIX" class="w-56 h-56 mx-auto rounded-lg mb-4">
+                    <input type="text" id="pix-copia-cola" readonly class="w-full bg-white border border-stone-300 rounded-xl py-3 px-3 text-xs font-mono text-stone-700">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Rodapé -->
-    <footer class="bg-stone-950 text-stone-400 text-xs border-t border-stone-800 py-12">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2026 Capela da Divina Esperança - Paróquia Sagrado Coração de Jesus. Todos os direitos reservados.</p>
-        </div>
+    <footer class="bg-stone-950 text-stone-400 text-xs py-8 text-center">
+        <p>&copy; 2026 Capela da Divina Esperança. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- Script de Integração Real com o Backend -->
     <script>
         let valorDoacaoAtual = 50;
-
-        function selecionarValorFixo(valor, elemento) {
-            valorDoacaoAtual = parseFloat(valor);
-            document.querySelectorAll('.btn-valor-opcao').forEach(btn => {
-                btn.classList.remove('border-vinho-700', 'bg-vinho-50', 'text-vinho-800', 'shadow-sm');
-                btn.classList.add('border-stone-200', 'text-stone-800');
-            });
-            elemento.classList.remove('border-stone-200', 'text-stone-800');
-            elemento.classList.add('border-vinho-700', 'bg-vinho-50', 'text-vinho-800', 'shadow-sm');
-            document.getElementById('valor-personalizado').value = '';
-        }
-
-        function aoDigitarValorPersonalizado() {
-            const val = parseFloat(document.getElementById('valor-personalizado').value);
-            if (!isNaN(val) && val > 0) {
-                valorDoacaoAtual = val;
-                document.querySelectorAll('.btn-valor-opcao').forEach(btn => {
-                    btn.classList.remove('border-vinho-700', 'bg-vinho-50', 'text-vinho-800', 'shadow-sm');
-                    btn.classList.add('border-stone-200', 'text-stone-800');
-                });
-            }
-        }
-
         async function gerarPIX() {
-            const inputCustom = document.getElementById('valor-personalizado');
-            if (inputCustom.value && parseFloat(inputCustom.value) > 0) {
-                valorDoacaoAtual = parseFloat(inputCustom.value);
-            }
-
-            const btnGerar = document.getElementById('btn-gerar');
-            const btnTexto = document.getElementById('btn-texto');
-            
-            btnGerar.disabled = true;
-            btnTexto.innerText = "GERANDO PIX...";
-
             try {
                 const response = await fetch('/api/gerar-pix', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ valor: valorDoacaoAtual })
                 });
-
                 const data = await response.json();
-                console.log('Resposta do Servidor:', data);
-
-                if (!response.ok || !data.success) {
-                    exibirToast("Erro", data.error || "Não foi possível gerar o PIX.", true);
-                    return;
-                }
-
-                const copiaCola = data.pix_copy_paste;
-                document.getElementById('pix-valor-confirmado').innerText = `R$ ${valorDoacaoAtual.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-                document.getElementById('pix-copia-cola').value = copiaCola;
-
-                const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(copiaCola)}`;
-                document.getElementById('qrcode-img').src = qrCodeUrl;
-
-                const containerResultado = document.getElementById('resultado-pix-container');
-                containerResultado.classList.remove('hidden');
-                containerResultado.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-                exibirToast("Sucesso!", "Código PIX gerado com sucesso.");
-
-            } catch (err) {
-                console.error(err);
-                exibirToast("Erro", "Falha ao comunicar com o servidor.", true);
-            } finally {
-                btnGerar.disabled = false;
-                btnTexto.innerText = "GERAR CÓDIGO PIX";
-            }
-        }
-
-        function copiarCodigoPIX() {
-            const campoInput = document.getElementById('pix-copia-cola');
-            campoInput.select();
-            navigator.clipboard.writeText(campoInput.value);
-            exibirToast("Copiado!", "Chave PIX copiada para a área de transferência.");
-        }
-
-        function exibirToast(titulo, mensagem, isErro = false) {
-            const container = document.getElementById('toast-container');
-            document.getElementById('toast-title').innerText = titulo;
-            document.getElementById('toast-message').innerText = mensagem;
-            container.classList.remove('translate-y-[-150%]', 'opacity-0');
-            container.classList.add('translate-y-0', 'opacity-100');
-            setTimeout(() => {
-                container.classList.remove('translate-y-0', 'opacity-100');
-                container.classList.add('translate-y-[-150%]', 'opacity-0');
-            }, 4000);
+                if (!response.ok || !data.success) { alert(data.error || "Erro"); return; }
+                document.getElementById('pix-copia-cola').value = data.pix_copy_paste;
+                document.getElementById('qrcode-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(data.pix_copy_paste)}`;
+                document.getElementById('resultado-pix-container').classList.remove('hidden');
+            } catch (err) { alert("Erro ao comunicar com o servidor."); }
         }
     </script>
 </body>
